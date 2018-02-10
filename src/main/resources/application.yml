@@ -7,3 +7,5 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: validate
+server:
+  port: ${PORT:8080}
