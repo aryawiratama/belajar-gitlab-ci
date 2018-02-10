@@ -9,3 +9,6 @@ spring:
       ddl-auto: validate
 server:
   port: ${PORT:8080}
+management:
+  security:
+    enabled: false
