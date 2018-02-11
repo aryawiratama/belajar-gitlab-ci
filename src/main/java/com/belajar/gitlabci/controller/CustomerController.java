@@ -2,6 +2,7 @@ package com.belajar.gitlabci.controller;
 
 import com.belajar.gitlabci.entity.Customer;
 import com.belajar.gitlabci.service.CustomerService;
+import io.prometheus.client.Counter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,11 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
+
+    private final Counter promRequestCounter = Counter.build()
+            .name("request_total")
+            .help("Total number of Request")
+            .register();
 
     private CustomerService customerService;
 
@@ -47,6 +53,7 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<Iterable<Customer>> findAllCustomer()throws Exception{
+        promRequestCounter.inc();
         return new ResponseEntity<>(customerService.findAll(), new HttpHeaders(), HttpStatus.OK);
     }
 }
